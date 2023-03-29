@@ -20,4 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 // @CrossOrigin(origins = "{http://localhost:4200","http://www.ndmkcn.com"})
 public interface ProductRepository extends JpaRepository<Product,Long> {
     Page<Product> findByCategoryId(@RequestParam("id")Long id, Pageable pageable);
+    // Burada containing spring data jpadan gelen bir özellik belirtilen parametre değeri ile eşleşen
+    // tüm name değerlerini page nesnesi olarak geri döndürür. Yani sanki sql ile like sorgusu yazmak gibi.
+    // Ayrıca biz burada Spring Data Rest kullandığımız için buraya yazdığımız endpointlere ulaşmak için
+    // arama işlemi yapmışız bu yüzden /api/search/ve metod adımızı yazarız.
+    Page<Product> findByNameContaining(@RequestParam("name") String name,Pageable pageable);
 }
