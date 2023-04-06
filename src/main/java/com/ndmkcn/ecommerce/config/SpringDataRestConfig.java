@@ -1,7 +1,9 @@
 package com.ndmkcn.ecommerce.config;
 
+import com.ndmkcn.ecommerce.entity.Country;
 import com.ndmkcn.ecommerce.entity.Product;
 import com.ndmkcn.ecommerce.entity.ProductCategory;
+import com.ndmkcn.ecommerce.entity.State;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.metamodel.EntityType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,16 +29,20 @@ public class SpringDataRestConfig implements RepositoryRestConfigurer {
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
         HttpMethod[] theUnsupportedActions={HttpMethod.POST,HttpMethod.PUT,HttpMethod.DELETE};
-        config.getExposureConfiguration()
-                .forDomainType(Product.class)
-                .withItemExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions))
-                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions));
-        config.getExposureConfiguration()
-                .forDomainType(ProductCategory.class)
-                .withItemExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions))
-                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions));
+        disableHttpMethods(Product.class, config, theUnsupportedActions);
+        disableHttpMethods(ProductCategory.class,config, theUnsupportedActions);
+        disableHttpMethods(Country.class, config, theUnsupportedActions);
+        disableHttpMethods(State.class,config, theUnsupportedActions);
         exposeIds(config);
     }
+    // Burayı sağ tıkladık ve refactor extract ile method haline getirdik çünkü tekrar eden bir yapı oldu.
+    private static void disableHttpMethods(Class theClass, RepositoryRestConfiguration config, HttpMethod[] theUnsupportedActions) {
+        config.getExposureConfiguration()
+                .forDomainType(theClass)
+                .withItemExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions))
+                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions));
+    }
+
     // Bu method Spring Data Rest bize kategory idsini vermediği için yazdık burad abize entity üzerinden
     // category id vermesi için bir takım ayarlamalar yaptık.
     private void exposeIds(RepositoryRestConfiguration config) {
