@@ -6,7 +6,6 @@ import com.ndmkcn.ecommerce.service.CheckoutService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/api/checkout")
 @AllArgsConstructor
