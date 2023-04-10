@@ -5,6 +5,7 @@ import com.ndmkcn.ecommerce.entity.Product;
 import com.ndmkcn.ecommerce.entity.ProductCategory;
 import com.ndmkcn.ecommerce.entity.State;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.Order;
 import jakarta.persistence.metamodel.EntityType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,6 +37,7 @@ public class SpringDataRestConfig implements RepositoryRestConfigurer {
         disableHttpMethods(ProductCategory.class,config, theUnsupportedActions);
         disableHttpMethods(Country.class, config, theUnsupportedActions);
         disableHttpMethods(State.class,config, theUnsupportedActions);
+        disableHttpMethods(Order.class,config, theUnsupportedActions);
         exposeIds(config);
         // CONFİGURE CORS MAPPİNG
         cors.addMapping(config.getBasePath() + "/**").allowedOrigins(theallowedOrigins);
