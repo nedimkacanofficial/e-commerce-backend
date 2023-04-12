@@ -61,7 +61,14 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>7.0.1.Final</version>
 		</dependency>
-
+		<!--
+		For detailed setup, see our quickstart at https://stripe.com/docs/development/quickstart
+		-->
+		<dependency>
+			<groupId>com.stripe</groupId>
+			<artifactId>stripe-java</artifactId>
+			<version>22.0.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
